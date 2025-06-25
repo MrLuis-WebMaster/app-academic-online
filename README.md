@@ -146,3 +146,10 @@ npm run build     # compilar para producción
 npm start         # iniciar producción (después de build)
 ```
 
+## 🌐 Enlace de la Demo Deployada
+
+Puedes acceder a la aplicación desplegada en Vercel desde el siguiente enlace:
+
+👉 [https://app-academic-online.vercel.app/](https://app-academic-online.vercel.app/)
+
+> 💡 Para una experiencia completa, crea un usuario y realiza la evaluación.
