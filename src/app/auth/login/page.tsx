@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import { LoginForm } from "@/components/auth/login/LoginForm";
+import { Suspense } from "react";
 
 export default function LoginPage() {
     return (
@@ -19,7 +20,9 @@ export default function LoginPage() {
             </header>
 
             <main className="container mx-auto px-4 py-8 flex items-center justify-center">
-                <LoginForm />
+                <Suspense fallback={<div>Cargando formulario...</div>}>
+                    <LoginForm />
+                </Suspense>
             </main>
         </div>
     );
