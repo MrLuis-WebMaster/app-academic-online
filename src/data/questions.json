@@ -1,0 +1,104 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "¿Cuál es el lenguaje de programación más utilizado para desarrollo web frontend?",
+      "options": ["Python", "JavaScript", "Java", "C++"],
+      "correctAnswer": 1,
+      "category": "Desarrollo Web",
+      "difficulty": "Básico"
+    },
+    {
+      "id": 2,
+      "question": "¿Qué significa HTML?",
+      "options": [
+        "Hypertext Markup Language",
+        "High Tech Modern Language",
+        "Home Tool Markup Language",
+        "Hyperlink and Text Markup Language"
+      ],
+      "correctAnswer": 0,
+      "category": "Desarrollo Web",
+      "difficulty": "Básico"
+    },
+    {
+      "id": 3,
+      "question": "¿Cuál de estos es un framework de JavaScript?",
+      "options": ["Django", "Laravel", "React", "Spring"],
+      "correctAnswer": 2,
+      "category": "Frameworks",
+      "difficulty": "Intermedio"
+    },
+    {
+      "id": 4,
+      "question": "¿Qué es una API REST?",
+      "options": [
+        "Un tipo de base de datos",
+        "Un estilo de arquitectura para servicios web",
+        "Un lenguaje de programación",
+        "Un sistema operativo"
+      ],
+      "correctAnswer": 1,
+      "category": "Backend",
+      "difficulty": "Intermedio"
+    },
+    {
+      "id": 5,
+      "question": "¿Cuál es la diferencia principal entre let y var en JavaScript?",
+      "options": [
+        "No hay diferencia",
+        "let tiene scope de bloque, var tiene scope de función",
+        "var es más rápido que let",
+        "let solo se usa en funciones"
+      ],
+      "correctAnswer": 1,
+      "category": "JavaScript",
+      "difficulty": "Intermedio"
+    },
+    {
+      "id": 6,
+      "question": "¿Qué es Git?",
+      "options": ["Un editor de código", "Un sistema de control de versiones", "Un framework web", "Una base de datos"],
+      "correctAnswer": 1,
+      "category": "Herramientas",
+      "difficulty": "Básico"
+    },
+    {
+      "id": 7,
+      "question": "¿Cuál de estos es un principio de la programación orientada a objetos?",
+      "options": ["Recursión", "Encapsulación", "Compilación", "Interpretación"],
+      "correctAnswer": 1,
+      "category": "Programación",
+      "difficulty": "Intermedio"
+    },
+    {
+      "id": 8,
+      "question": "¿Qué es CSS?",
+      "options": ["Central Style Sheets", "Computer Style Sheets", "Cascading Style Sheets", "Creative Style Sheets"],
+      "correctAnswer": 2,
+      "category": "Desarrollo Web",
+      "difficulty": "Básico"
+    },
+    {
+      "id": 9,
+      "question": "¿Cuál es la complejidad temporal del algoritmo de búsqueda binaria?",
+      "options": ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+      "correctAnswer": 1,
+      "category": "Algoritmos",
+      "difficulty": "Avanzado"
+    },
+    {
+      "id": 10,
+      "question": "¿Qué es una base de datos NoSQL?",
+      "options": [
+        "Una base de datos que no usa SQL",
+        "Una base de datos relacional mejorada",
+        "Una base de datos que no almacena datos",
+        "Una base de datos solo para números"
+      ],
+      "correctAnswer": 0,
+      "category": "Bases de Datos",
+      "difficulty": "Intermedio"
+    }
+  ]
+}
