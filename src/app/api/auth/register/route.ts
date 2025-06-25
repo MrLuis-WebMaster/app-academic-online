@@ -8,6 +8,10 @@ export async function POST(request: NextRequest) {
     const body: RegisterRequest = await request.json();
     const useCase = new Register()
     useCase.execute(body);
+    return NextResponse.json(
+      { success: true, message: "Usuario registrado exitosamente" },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error en el registro:", error);
     return NextResponse.json(
