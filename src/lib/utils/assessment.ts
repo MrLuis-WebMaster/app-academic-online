@@ -5,7 +5,7 @@ import { formatTime } from "./time"
 
 
 export function calculateScore(answers: UserAnswer[], questions: Question[]) {
-    const correctAnswers = answers.filter((a) => a.isCorrect).length
+    const correctAnswers = answers.filter((a, i) => a.selectedAnswer === questions[i].correctAnswer).length
     const percentage = Math.round((correctAnswers / questions.length) * 100)
     return { score: correctAnswers, percentage }
 }
@@ -60,12 +60,9 @@ export function getScoreColor(percentage: number): string {
   
 export async function generateAssessmentReport({
     questions,
-    userAnswers,
+    resultAssessment,
     timeSpent,
     user,
-    recommendation,
-    score,
-    percentage
 }: GenerateReportParams) {
     const doc = new jsPDF()
     const now = new Date()
@@ -74,6 +71,8 @@ export async function generateAssessmentReport({
     const secondaryColor: [number, number, number] = [76, 175, 80]
     const textColor: [number, number, number] = [33, 33, 33]
     const lightGray: [number, number, number] = [245, 245, 245]
+
+    const { score: { percentage, correct: score, total }, recommendation } = resultAssessment
 
     doc.setFillColor(...primaryColor)
     doc.rect(0, 0, 210, 40, "F")
@@ -138,9 +137,9 @@ export async function generateAssessmentReport({
 
     doc.setFontSize(12)
     doc.setFont("helvetica", "normal")
-    doc.text(`Respuestas correctas: ${score}/${questions.length}`, 20, 170)
+    doc.text(`Respuestas correctas: ${score}/${total}`, 20, 170)
     doc.text(`Tiempo total: ${formatTime(timeSpent)}`, 20, 180)
-    doc.text(`Promedio por pregunta: ${Math.round(timeSpent / questions.length)}s`, 20, 190)
+    doc.text(`Promedio por pregunta: ${Math.round(timeSpent / total)}s`, 20, 190)
 
     doc.setFontSize(14)
     doc.setFont("helvetica", "bold")
@@ -150,9 +149,8 @@ export async function generateAssessmentReport({
     const categories = Array.from(new Set(questions.map((q) => q.category)))
     categories.forEach((category) => {
         const categoryQuestions = questions.filter((q) => q.category === category)
-        const categoryAnswers = userAnswers.filter((a) => categoryQuestions.some((q) => q.id === a.questionId))
-        const categoryScore = categoryAnswers.filter((a) => a.isCorrect).length
-        const categoryPercentage = Math.round((categoryScore / categoryQuestions.length) * 100)
+        const categoryScore = resultAssessment.score.correct
+        const categoryPercentage = resultAssessment.score.percentage
 
         doc.setFontSize(11)
         doc.setFont("helvetica", "normal")

@@ -10,4 +10,7 @@ export interface Question {
 export interface QuestionList {
     questions: Question[]
 }
+export interface QuestionListWithoutAnswers {
+    questions: Omit<Question, "correctAnswer">[]
+}
   

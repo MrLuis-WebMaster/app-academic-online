@@ -4,22 +4,19 @@ import { Award, BookOpen, CheckCircle, AlertCircle, Download } from "lucide-reac
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { calculateScore, getRecommendation, getScoreColor, getScoreMessage } from "@/lib/utils/assessment"
+import { getScoreColor, getScoreMessage } from "@/lib/utils/assessment"
 import { formatTime } from "@/lib/utils/time"
-import { Question } from "@/layers/domain/models/assessment/QuestionAssessment"
-import { UserAnswer } from "@/layers/domain/models/assessment/AssessmentResult"
+import { AssessmentResultResponse } from "@/layers/domain/models/assessment/AssessmentResult"
 
 interface Props {
-    questions: Question[]
-    userAnswers: UserAnswer[]
+    resultAssessment: AssessmentResultResponse
     timeSpent: number
     generatePDF: () => void
     isGeneratingPDF: boolean
 }
 
-export default function AssessmentResults({ questions, userAnswers, timeSpent, generatePDF, isGeneratingPDF }: Props) {
-    const { score, percentage } = calculateScore(userAnswers, questions)
-    const recommendation = getRecommendation(score)
+export default function AssessmentResults({ timeSpent, generatePDF, isGeneratingPDF, resultAssessment }: Props) {
+    const { score: {correct, percentage, total}, recommendation } = resultAssessment
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -69,7 +66,7 @@ export default function AssessmentResults({ questions, userAnswers, timeSpent, g
 
                         <div className="text-center">
                             <div className={`text-6xl font-bold mb-2 ${getScoreColor(percentage)}`}>{percentage}%</div>
-                            <p className="text-xl text-gray-600 mb-4">{score} de {questions.length} respuestas correctas</p>
+                            <p className="text-xl text-gray-600 mb-4">{correct} de {total} respuestas correctas</p>
                             <p className="text-gray-700 text-lg">{getScoreMessage(percentage)}</p>
                         </div>
 
@@ -79,11 +76,11 @@ export default function AssessmentResults({ questions, userAnswers, timeSpent, g
                                 <div className="text-sm text-gray-600">Tiempo Total</div>
                             </div>
                             <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                <div className="text-2xl font-bold text-gray-900">{Math.round(timeSpent / questions.length)}s</div>
+                                <div className="text-2xl font-bold text-gray-900">{Math.round(timeSpent / total)}s</div>
                                 <div className="text-sm text-gray-600">Promedio por Pregunta</div>
                             </div>
                             <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                <div className="text-2xl font-bold text-gray-900">{questions.length - score}</div>
+                                <div className="text-2xl font-bold text-gray-900">{total - correct}</div>
                                 <div className="text-sm text-gray-600">Respuestas Incorrectas</div>
                             </div>
                         </div>

@@ -15,10 +15,10 @@ export class SubmitAssessment {
         return {
             score: {
                 correct: scoreData.score,
-                total: scoreData.score,
+                total: questionsList.questions.length,
                 percentage: scoreData.percentage,
             },
-            recommendation: recommendationObj.title,
+            recommendation: recommendationObj,
         }
     }
 }

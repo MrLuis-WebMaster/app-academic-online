@@ -22,9 +22,9 @@ export default function AssessmentPage() {
         handleNextQuestion,
         handlePreviousQuestion,
         timeSpent,
-        userAnswers,
         isGeneratingPDF,
-        generatePDF
+        generatePDF,
+        resultAssessment
     } = useAssessmentLogic()
 
     if (isLoading) return <AssessmentLoader />
@@ -32,8 +32,7 @@ export default function AssessmentPage() {
     if (showResults) {
         return (
             <AssessmentResults
-                questions={questions}
-                userAnswers={userAnswers}
+                resultAssessment={resultAssessment}
                 timeSpent={timeSpent}
                 generatePDF={generatePDF}
                 isGeneratingPDF={isGeneratingPDF}
@@ -62,7 +61,6 @@ export default function AssessmentPage() {
                                 onSelectAnswer={handleAnswerSelect}
                             />
 
-                            {/* Navegación */}
                             <div className="flex items-center justify-between mt-8 pt-6 border-t">
                                 <Button
                                     variant="outline"

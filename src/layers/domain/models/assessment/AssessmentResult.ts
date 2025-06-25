@@ -4,7 +4,6 @@ import { Question } from "./QuestionAssessment"
 export interface UserAnswer {
     questionId: number
     selectedAnswer: number
-    isCorrect: boolean
     timeSpent: number
 }
 
@@ -23,7 +22,7 @@ export interface ScoreData {
 
 export interface AssessmentResultResponse {
     score: ScoreData,
-    recommendation: string,
+    recommendation: Recommendation,
 }
 
 export interface Recommendation {
@@ -36,11 +35,8 @@ export interface Recommendation {
   
 export interface GenerateReportParams {
     questions: Question[]
-    userAnswers: UserAnswer[]
+    resultAssessment: AssessmentResultResponse
     timeSpent: number
     user: { fullName: string; email: string }
-    recommendation: Recommendation
-    score: number
-    percentage: number
 }
   

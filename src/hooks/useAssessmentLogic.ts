@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { generateAssessmentReport, getRecommendation } from "@/lib/utils/assessment"
+import { useEffect, useRef, useState } from "react"
+import { generateAssessmentReport } from "@/lib/utils/assessment"
 import { useAcademicUser } from "./useAcademicUser"
 import { Question } from "@/layers/domain/models/assessment/QuestionAssessment"
-import { UserAnswer } from "@/layers/domain/models/assessment/AssessmentResult"
+import { AssessmentResultResponse, UserAnswer } from "@/layers/domain/models/assessment/AssessmentResult"
 import { getQuestions, submitAssessment } from "@/lib/api/assessment"
 
 export function useAssessmentLogic() {
@@ -17,7 +17,11 @@ export function useAssessmentLogic() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [showResults, setShowResults] = useState(false)
     const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+    const [resultAssessment, setResultAssessment] = useState<AssessmentResultResponse>({} as AssessmentResultResponse)   
     const { user } = useAcademicUser()
+
+    const timerRef = useRef<NodeJS.Timeout | null>(null)
+
 
     useEffect(() => {
         const loadQuestions = async () => {
@@ -35,9 +39,17 @@ export function useAssessmentLogic() {
     }, [])
 
     useEffect(() => {
-        const timer = setInterval(() => setTimeSpent((prev) => prev + 1), 1000)
-        return () => clearInterval(timer)
+        timerRef.current = setInterval(() => {
+            setTimeSpent((prev) => prev + 1)
+        }, 1000)
+
+        return () => {
+            if (timerRef.current) {
+                clearInterval(timerRef.current)
+            }
+        }
     }, [])
+    
 
     const handleAnswerSelect = (index: number) => {
         setSelectedAnswer(index)
@@ -59,7 +71,6 @@ export function useAssessmentLogic() {
         const answer: UserAnswer = {
             questionId: current.id,
             selectedAnswer,
-            isCorrect: selectedAnswer === current.correctAnswer,
             timeSpent: elapsed
         }
 
@@ -77,16 +88,18 @@ export function useAssessmentLogic() {
 
     const finishAssessment = async (answers: UserAnswer[]) => {
         setIsSubmitting(true)
+        stopTimer()
         try {
             if (!user) {
                 throw new Error("User data is missing.");
             }
-            await submitAssessment({
+            const data = await submitAssessment({
                 answers,
                 totalTime: timeSpent,
                 user: user,
                 completedAt: new Date().toISOString(),
             })
+            setResultAssessment(data)
             setShowResults(true)
         } catch (error) {
             console.error("Error submitting:", error)
@@ -100,23 +113,24 @@ export function useAssessmentLogic() {
         setIsGeneratingPDF(true)
         try {
             const userData = JSON.parse(localStorage.getItem("user") || "{}")
-            const score = userAnswers.filter((a) => a.isCorrect).length
-            const recommendation = getRecommendation(score)
 
             await generateAssessmentReport({
                 user: userData,
-                userAnswers,
+                resultAssessment,
                 questions,
                 timeSpent,
-                recommendation,
-                score,
-                percentage: Math.round((score / questions.length) * 100),
             })
         } catch (err) {
             console.error("Error generating PDF:", err)
             alert("No se pudo generar el PDF.")
         } finally {
             setIsGeneratingPDF(false)
+        }
+    }
+
+    const stopTimer = () => {
+        if (timerRef.current) {
+            clearInterval(timerRef.current)
         }
     }
 
@@ -133,6 +147,7 @@ export function useAssessmentLogic() {
         timeSpent,
         userAnswers,
         isGeneratingPDF,
-        generatePDF
+        generatePDF,
+        resultAssessment
     }
 }
