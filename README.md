@@ -84,6 +84,9 @@ Desde el inicio, me enfoqué en diseñar una arquitectura escalable, separando l
 - Emails de confirmación al terminar evaluación.
 - Ver resultado del test realizado.
 - Usar AI para mejorar las recomendaciones de cursos.
+- Usar constantes por ejemplo para nombres de keys en las cookies, localStorage, rutas.
+- Las respuestas del assessment se muestren en orden aleatorio.
+- Las respuestas segun la pregunta puedan varian y que sea igual de valida la respuesta.
 
 ---
 
