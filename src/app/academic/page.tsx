@@ -11,48 +11,18 @@ import {
 } from "@/components/ui/card"
 import {
     BookOpen,
-    User,
-    LogOut,
     Settings,
     Award,
     Clock,
     TrendingUp,
 } from "lucide-react"
-import LoaderScreen from "@/components/common/LoaderScreen"
 import Link from "next/link"
 
 export default function AcademicPage() {
-    const { user, isLoading, logout } = useAcademicUser()
-
-    if (isLoading) return <LoaderScreen message="Cargando tu espacio académico..." />
+    const { user,  } = useAcademicUser()
     if (!user) return null
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
-            <header className="bg-white shadow-sm border-b">
-                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <BookOpen className="h-8 w-8 text-orange-600" />
-                        <span className="text-2xl font-bold text-gray-900">EduPlatform</span>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                        <div className="flex items-center space-x-2">
-                            <User className="h-5 w-5 text-gray-600" />
-                            <span className="text-gray-700">{user.fullName}</span>
-                            {user.role === "admin" && (
-                                <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
-                                    Admin
-                                </span>
-                            )}
-                        </div>
-                        <Button variant="outline" size="sm" onClick={logout}>
-                            <LogOut className="h-4 w-4 mr-2" />
-                            Cerrar Sesión
-                        </Button>
-                    </div>
-                </div>
-            </header>
 
             <main className="container mx-auto px-4 py-8">
                 <div className="mb-8">
