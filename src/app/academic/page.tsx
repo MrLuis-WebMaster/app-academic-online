@@ -2,21 +2,17 @@
 
 import { useAcademicUser } from "@/hooks/useAcademicUser"
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+
 import {
     BookOpen,
-    Settings,
     Award,
     Clock,
     TrendingUp,
 } from "lucide-react"
 import Link from "next/link"
+import StatCard from "@/components/academic/StatCard"
+import CourseProgress from "@/components/academic/CourseProgress"
+import Sidebar from "@/components/academic/Sidebar"
 
 export default function AcademicPage() {
     const { user,  } = useAcademicUser()
@@ -61,97 +57,4 @@ export default function AcademicPage() {
     )
 }
 
-const StatCard = ({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) => (
-    <Card>
-        <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <p className="text-sm font-medium text-gray-600">{label}</p>
-                    <p className="text-2xl font-bold text-gray-900">{value}</p>
-                </div>
-                {icon}
-            </div>
-        </CardContent>
-    </Card>
-)
 
-const CourseProgress = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>Continúa Aprendiendo</CardTitle>
-            <CardDescription>Tus cursos en progreso</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-            {[
-                { title: "Desarrollo Web con React", progress: 65 },
-                { title: "Python para Data Science", progress: 40 },
-                { title: "Diseño UX/UI Avanzado", progress: 25 },
-            ].map((course) => (
-                <div key={course.title} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold">{course.title}</h4>
-                        <span className="text-sm text-gray-500">{course.progress}% completado</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
-                        <div className="bg-orange-600 h-2 rounded-full" style={{ width: `${course.progress}%` }}></div>
-                    </div>
-                    <Button size="sm" className="bg-orange-600 hover:bg-orange-700">
-                        Continuar Curso
-                    </Button>
-                </div>
-            ))}
-        </CardContent>
-    </Card>
-)
-
-const Sidebar = () => (
-    <div className="space-y-6">
-        <Card>
-            <CardHeader>
-                <CardTitle>Acciones Rápidas</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-                <Button className="w-full justify-start" variant="outline">
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    Explorar Cursos
-                </Button>
-                <Button className="w-full justify-start" variant="outline">
-                    <Award className="h-4 w-4 mr-2" />
-                    Mis Certificados
-                </Button>
-                <Button className="w-full justify-start" variant="outline">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Configuración
-                </Button>
-            </CardContent>
-        </Card>
-
-        <Card>
-            <CardHeader>
-                <CardTitle>Logros Recientes</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-                <Achievement
-                    icon={<Award className="h-4 w-4 text-green-600" />}
-                    title="Curso Completado"
-                    subtitle="JavaScript Fundamentals"
-                />
-                <Achievement
-                    icon={<TrendingUp className="h-4 w-4 text-blue-600" />}
-                    title="Racha de 7 días"
-                    subtitle="¡Sigue así!"
-                />
-            </CardContent>
-        </Card>
-    </div>
-)
-
-const Achievement = ({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) => (
-    <div className="flex items-center space-x-3">
-        <div className="bg-gray-100 p-2 rounded-full">{icon}</div>
-        <div>
-            <p className="text-sm font-medium">{title}</p>
-            <p className="text-xs text-gray-500">{subtitle}</p>
-        </div>
-    </div>
-)
