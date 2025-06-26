@@ -17,7 +17,7 @@ cd app-academic-online
 npm install
 
 # Crear un archivo de entorno
-cp .env.example .env.local
+cp env.example .env
 # (Edita JWT_SECRET si lo deseas)
 
 # Iniciar servidor de desarrollo
