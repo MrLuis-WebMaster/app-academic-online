@@ -20,15 +20,6 @@ export default function AssessmentResults({ timeSpent, generatePDF, isGenerating
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
-            <header className="container mx-auto px-4 py-6">
-                <nav>
-                    <Link href="/" className="flex items-center space-x-2">
-                        <BookOpen className="h-8 w-8 text-orange-600" />
-                        <span className="text-2xl font-bold text-gray-900">EduPlatform</span>
-                    </Link>
-                </nav>
-            </header>
-
             <div className="container mx-auto px-4 py-8 flex items-center justify-center">
                 <Card className="w-full max-w-2xl shadow-xl">
                     <CardHeader className="text-center">
