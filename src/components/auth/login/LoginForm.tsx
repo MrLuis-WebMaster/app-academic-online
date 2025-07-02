@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,6 @@ interface LoginErrors {
 }
 
 export function LoginForm() {
-    const router = useRouter();
     const [formData, setFormData] = useState<LoginFormData>({ email: "", password: "" });
     const [errors, setErrors] = useState<LoginErrors>({});
     const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +62,9 @@ export function LoginForm() {
         try {
             const data = await login(formData)
             localStorage.setItem("user", JSON.stringify(data));
-            router.push("/academic");
+            // router.push("/academic");
+            window.location.href = "/academic";
+
         } catch (error) {
             setErrors({ general: (error as Error).message });
         } finally {
